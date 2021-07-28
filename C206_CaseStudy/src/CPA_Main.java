@@ -4,19 +4,17 @@ public class CPA_Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		subject subject1 = new subject(1, "English");
-		subject subject2 = new subject(2, "Mathematics");
-		subject subject3 = new subject(3, "Pure Biology");
-		subject subject4 = new subject(4, "Pure Chemistry");
-		subject subject5 = new subject(5, "Pure Physics");
-		subject subject6 = new subject(6, "Mothertongue");
+		subject subject1 = new subject(1, "English", "Compulsory");
+		subject subject2 = new subject(2, "Mathematics", "Compulsory");
+		subject subject3 = new subject(3, "Science", "Compulsory");
+		subject subject4 = new subject(4, "Chinese", "Compulsory");
+		subject subject5 = new subject(5, "Social Studies", "Compulsory");
 		ArrayList<subject> subjectlist = new ArrayList<subject>();
 		subjectlist.add(subject1);
 		subjectlist.add(subject2);
 		subjectlist.add(subject3);
 		subjectlist.add(subject4);
 		subjectlist.add(subject5);
-		subjectlist.add(subject6);
 		int userOption = -1;
 		ArrayList<user> userList = new ArrayList<user>();
 
@@ -70,7 +68,8 @@ public class CPA_Main {
 				case 1:
 					int subjectId = Helper.readInt("Enter subject ID > ");
 					String subjectName = Helper.readString("Enter the subject you want to add > ");
-					subject newsubject = new subject(subjectId, subjectName);
+					String compulsory = Helper.readString("Compulsory / Elective");
+					subject newsubject = new subject(subjectId, subjectName, compulsory);
 					boolean result = CPA_Main.addSubject(subjectlist, newsubject);
 					if (result == true) {
 						System.out.println("Subject added!");
