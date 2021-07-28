@@ -4,12 +4,14 @@ public class career {
 	private int career_id;
 	private String career_name;
 	private String career_info;
+	private String career_jobs;
 	
-	public career(int career_id, String career_name, String career_info) {
+	public career(int career_id, String career_name, String career_info, String career_jobs) {
 		super();
 		this.career_id = career_id;
 		this.career_name = career_name;
 		this.career_info = career_info;
+		this.career_jobs = career_jobs;
 	}
 
 	public int getCareer_id() {
@@ -34,6 +36,14 @@ public class career {
 
 	public void setCareer_info(String career_info) {
 		this.career_info = career_info;
+	}
+
+	public String getCareer_jobs() {
+		return career_jobs;
+	}
+
+	public void setCareer_jobs(String career_jobs) {
+		this.career_jobs = career_jobs;
 	}
 
 }

@@ -16,7 +16,19 @@ public class CPA_Main {
 		subjectlist.add(subject4);
 		subjectlist.add(subject5);
 		int userOption = -1;
+
 		ArrayList<user> userList = new ArrayList<user>();
+
+		// careerList
+		career career1 = new career(1, "Architecture and engineering",
+				"People in the architecture and planning fields are responsible for designing new structures or creating aesthetically pleasing, practical and structurally sound environments.",
+				"Architect, Civil engineer, Landscape architect, Sustainable designer, Biomedical engineer");
+		career career2 = new career(2, "Arts, culture and entertainment",
+				"This career field is dedicated to enriching people's lives through culture and the sharing of arts and self-expression.",
+				"Singer/songwriter, Music producer, Art curator, Animator/video game designer, Filmmaker, Graphic designer, Fashion designer, Photographer");
+		ArrayList<career> careerList = new ArrayList<career>();
+		careerList.add(career1);
+		careerList.add(career2);
 
 		while (userOption != 0) { // user did not chose exit
 			CPA_Main.MainMenu();// Print main menu
@@ -47,18 +59,37 @@ public class CPA_Main {
 			}
 
 			else if (userOption == 3) { // add new career information
-				int careerId = Helper.readInt("Enter ID of career: ");
-				String careerName = Helper.readString("Enter the name of career: ");
-				String careerInfo = Helper.readString("Enter the information of the career: ");
 
-				if (careerId != 0 && !careerName.isEmpty() && !careerInfo.isEmpty()) {
-					career newCareer = new career(careerId, careerName, careerInfo);
-					System.out.println("New career has been added successfully");
-				} else {
-					System.out.println();
+				careerMenu();
+				int careerOption = Helper.readInt("Enter option> ");
+
+				if (careerOption == 1) { // view all career
+
+					System.out.println(showAllCareer(careerList));
+					
+				} 
+				else if (careerOption == 2) { // add new career
+					
+					int careerId = Helper.readInt("Enter ID of career> ");
+					String careerName = Helper.readString("Enter the name of career> ");
+					String careerInfo = Helper.readString("Enter the information of the career> ");
+					String careerJob = Helper.readString("Enter jobs> ");
+
+					career newcareer = new career(careerId, careerName, careerInfo, careerJob);
+					
+					addCareer(careerList, newcareer);
+					
+				}
+				else if (careerOption == 3) { // delete career
+					
+					
+				} 
+				else if (careerOption == 4) { // back to main menu
+					
+					
 				}
 
-				break;
+				
 			}
 
 			else if (userOption == 4) { // add new subject
@@ -157,7 +188,7 @@ public class CPA_Main {
 		// can add on if needed
 		System.out.println("1. Add new user account");
 		System.out.println("2. Add new academic cluster");
-		System.out.println("3. Add new career information");
+		System.out.println("3. Manage career information");
 		System.out.println("4. Manage subjects");
 		System.out.println("5. Add new prerequisites");
 		System.out.println("6. Add new pathway");
@@ -227,5 +258,54 @@ public class CPA_Main {
 
 		return output;
 	}
+
+	private static void careerMenu() {
+
+		System.out.println("1. View all career");
+		System.out.println("2. Add new career");
+		System.out.println("3. Delete career");
+		System.out.println("4. Return to main menu");
+		Helper.line(30, "-");
+	}
+
+	public static String showAllCareer(ArrayList<career> careerList) {
+
+		Helper.line(30, "-");
+		System.out.println("CAREER LIST");
+		Helper.line(30, "-");
+
+		String output = String.format("%-10s %-20s %-40s %-20s \n", "ID", "NAME", "INFORAMTION", "RELAVENT JOB");
+
+		for (int i = 0; i < careerList.size(); i++) {
+			output += String.format("%-10d %-20s %-40s %-20s \n", careerList.get(i).getCareer_id(),
+					careerList.get(i).getCareer_name(), careerList.get(i).getCareer_info(),
+					careerList.get(i).getCareer_jobs());
+		}
+		return output;
+	}
+	
+	public static void addCareer(ArrayList<career> careerList, career newCareer) {
+		
+		for (int i = 0; i < careerList.size(); i++) {
+			if (careerList.get(i).getCareer_id() == newCareer.getCareer_id() || careerList.get(i).getCareer_name() == newCareer.getCareer_name()) { 
+				// duplicate of id or name
+				System.out.println("Failed! ID or career name exists");
+				break;
+			} else {
+				//no duplicate, no empty field
+				if (newCareer.getCareer_id() != 0 && !newCareer.getCareer_name().isEmpty() && !newCareer.getCareer_info().isEmpty() && !newCareer.getCareer_jobs().isEmpty()) { // no empty field
+					careerList.add(newCareer);
+					System.out.println("New career has been added successfully");
+					break;
+				} else { // no duplicate and no
+					// no duplicate but get empty field
+					System.out.println("Failed! All fields needed to be filled in.");
+					break;
+				}
+			}
+		}
+		
+	}
+	
 
 }
