@@ -66,30 +66,34 @@ public class CPA_Main {
 				if (careerOption == 1) { // view all career
 
 					System.out.println(showAllCareer(careerList));
-					
-				} 
-				else if (careerOption == 2) { // add new career
-					
+
+				} else if (careerOption == 2) { // add new career
+
 					int careerId = Helper.readInt("Enter ID of career> ");
 					String careerName = Helper.readString("Enter the name of career> ");
 					String careerInfo = Helper.readString("Enter the information of the career> ");
 					String careerJob = Helper.readString("Enter jobs> ");
 
 					career newcareer = new career(careerId, careerName, careerInfo, careerJob);
-					
+
 					addCareer(careerList, newcareer);
-					
-				}
-				else if (careerOption == 3) { // delete career
-					
-					
-				} 
-				else if (careerOption == 4) { // back to main menu
-					
-					
+
+				} else if (careerOption == 3) { // delete career
+
+					if (careerList.size() < 1) { 
+						System.out.println("No record");
+					} else {
+						System.out.println(showAllCareer(careerList));
+						Helper.line(30, "-");
+						
+						int careerId = Helper.readInt("ID of career to delete> ");
+						deleteCareer(careerList, careerId);
+					}
+
+				} else if (careerOption == 4) { // back to main menu
+
 				}
 
-				
 			}
 
 			else if (userOption == 4) { // add new subject
@@ -283,17 +287,20 @@ public class CPA_Main {
 		}
 		return output;
 	}
-	
+
 	public static void addCareer(ArrayList<career> careerList, career newCareer) {
-		
+
 		for (int i = 0; i < careerList.size(); i++) {
-			if (careerList.get(i).getCareer_id() == newCareer.getCareer_id() || careerList.get(i).getCareer_name() == newCareer.getCareer_name()) { 
+			if (careerList.get(i).getCareer_id() == newCareer.getCareer_id()
+					|| careerList.get(i).getCareer_name() == newCareer.getCareer_name()) {
 				// duplicate of id or name
 				System.out.println("Failed! ID or career name exists");
 				break;
 			} else {
-				//no duplicate, no empty field
-				if (newCareer.getCareer_id() != 0 && !newCareer.getCareer_name().isEmpty() && !newCareer.getCareer_info().isEmpty() && !newCareer.getCareer_jobs().isEmpty()) { // no empty field
+				// no duplicate, no empty field
+				if (newCareer.getCareer_id() != 0 && !newCareer.getCareer_name().isEmpty()
+						&& !newCareer.getCareer_info().isEmpty() && !newCareer.getCareer_jobs().isEmpty()) { // no empty
+																												// field
 					careerList.add(newCareer);
 					System.out.println("New career has been added successfully");
 					break;
@@ -304,8 +311,23 @@ public class CPA_Main {
 				}
 			}
 		}
-		
 	}
-	
+
+	public static void deleteCareer(ArrayList<career> careerList, int careerId) {
+
+		String output = "Failed! Undefined career id";
+
+		for (int i = 0; i < careerList.size(); i++) {
+			if (careerList.get(i).getCareer_id() == careerId) {
+				careerList.remove(i);
+				output = "Successful! Career deleted";
+//				System.out.println("Successful! Career deleted");
+				break;
+			}
+		}
+
+		System.out.println(output);
+
+	}
 
 }
