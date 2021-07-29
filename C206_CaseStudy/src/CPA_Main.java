@@ -80,12 +80,12 @@ public class CPA_Main {
 
 				} else if (careerOption == 3) { // delete career
 
-					if (careerList.size() < 1) { 
+					if (careerList.size() < 1) {
 						System.out.println("No record");
 					} else {
 						System.out.println(showAllCareer(careerList));
 						Helper.line(30, "-");
-						
+
 						int careerId = Helper.readInt("ID of career to delete> ");
 						deleteCareer(careerList, careerId);
 					}
@@ -117,17 +117,10 @@ public class CPA_Main {
 					System.out.println(allsubjects);
 					break;
 				case 3:
-					String deleteSubjectName = Helper.readString("Enter subject you would like to delete > ");
+					System.out.println(subjectListToString(subjectlist));
+					int deleteSubjectName = Helper.readInt("Enter subject's ID you would like to delete > ");
 					String subjectdetails = CPA_Main.getSubject(subjectlist, deleteSubjectName);
-					for (int i = 0; i < subjectlist.size(); i++) {
-						subject s = subjectlist.get(i);
-						System.out.println(s.getSubjectName());
-						if (deleteSubjectName == s.getSubjectName()) {
-							subjectdetails = s.getSubjectName();
-						}
-					}
-					if (subjectdetails.isEmpty() == false) {
-						System.out.println(subjectdetails);
+					if (!subjectdetails.isEmpty()) {
 						char toDelete = Helper.readChar("Do you wish to delete this subject?(y/n) > ");
 						switch (toDelete) {
 						case 'y':
@@ -143,7 +136,7 @@ public class CPA_Main {
 						}
 
 					} else {
-						System.out.println("That subject does not exist!");
+						System.out.println("That subject ID does not exist!");
 					}
 					break;
 				case 5:
@@ -227,17 +220,18 @@ public class CPA_Main {
 	public static String subjectListToString(ArrayList<subject> subjectlist) {
 
 		String output = "";
-		output += String.format("%-10s\n", "LIST OF SUBJECTS");
+		output += String.format("%-10s %-10s\n", "ID", "SUBJECT");
 		for (int i = 0; i < subjectlist.size(); i++) {
-			output += String.format("%-10s\n", subjectlist.get(i).getSubjectName());
+			output += String.format("%-10d %-10s\n", subjectlist.get(i).getSubjectId(),
+					subjectlist.get(i).getSubjectName());
 		}
 		return output;
 	}
 
-	public static boolean removeSubject(ArrayList<subject> subjectlist, String subjectname) {
+	public static boolean removeSubject(ArrayList<subject> subjectlist, int subjectid) {
 
 		for (int i = 0; i < subjectlist.size(); i++) {
-			if (subjectlist.get(i).getSubjectName() == subjectname) {
+			if (subjectlist.get(i).getSubjectId() == subjectid) {
 				subjectlist.remove(i);
 				return true;
 			}
@@ -246,14 +240,14 @@ public class CPA_Main {
 		return false;
 	}
 
-	public static String getSubject(ArrayList<subject> subjectlist, String subjectname) {
+	public static String getSubject(ArrayList<subject> subjectlist, int subjectid) {
 		String output = "";
 
 		for (int i = 0; i < subjectlist.size(); i++) {
 			subject s = subjectlist.get(i);
-			if (s.getSubjectName() == subjectname) {
-				output += String.format("%-10s\n", "Subject");
-				output += String.format("%-10s\n", s.getSubjectName());
+			if (s.getSubjectId() == subjectid) {
+				output += String.format("%-10s %-10s\n", "ID", "SUBJECT");
+				output += String.format("%-10d %-10s\n", s.getSubjectId(), s.getSubjectName());
 				break;
 			}
 		}
