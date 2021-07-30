@@ -9,7 +9,9 @@ public class CPA_Main {
 		subject subject3 = new subject(3, "Science", "Compulsory");
 		subject subject4 = new subject(4, "Chinese", "Compulsory");
 		subject subject5 = new subject(5, "Social Studies", "Compulsory");
+		
 		ArrayList<subject> subjectlist = new ArrayList<subject>();
+		
 		subjectlist.add(subject1);
 		subjectlist.add(subject2);
 		subjectlist.add(subject3);
@@ -35,24 +37,41 @@ public class CPA_Main {
 			userOption = Helper.readInt("Enter your option: ");
 			Helper.line(30, "-");
 
-			if (userOption == 1) { // add new user account
-				int userID = Helper.readInt("Enter your id: ");
-				String userName = Helper.readString("Enter user name: ");
-				String userRole = Helper.readString("Enter user role: ");
-				String userEmail = Helper.readString("Enter email: ");
-				String userPassword = Helper.readString("Enter user password: ");
+			if (userOption == 1) { // Manage account
+				CPA_Main.accountMenu();//Print sub menu for account management
+				int accountOption = Helper.readInt("Enter your option: ");
+				Helper.line(30, "-");
+					
+				if (accountOption == 1) {
+					int userID = Helper.readInt("Enter your id: ");
+					String userName = Helper.readString("Enter user name: ");
+					String userRole = Helper.readString("Enter user role: ");
+					String userEmail = Helper.readString("Enter email: ");
+					String userPassword = Helper.readString("Enter user password: ");
 
-				user newUser = new user(userID, userName, userRole, userEmail, userPassword);
-
-				if (newUser.getUserid() != 0 && !newUser.getName().isEmpty() && !newUser.getRole().isEmpty()
-						&& !newUser.getemail().isEmpty() && !newUser.getPassword().isEmpty()) {
-					userList.add(newUser);
-					System.out.println("Account has been created");
-
-				} else {
-					System.out.println("You did not fill up all required field, add acount failed.");
+				    user newUser = new user(userID, userName, userRole, userEmail, userPassword);
+				    
+				    CPA_Main.addAccount(userList, newUser);
+		
+					
+				}else if(accountOption == 2) {
+					String accountList = CPA_Main.showAccount(userList);
+					System.out.println(accountList);
+					if(userList.size()>0) {
+						int userID = Helper.readInt("Enter account id: ");
+						CPA_Main.deleteAccount(userList, userID);
+					}
+				
+				}else if(accountOption==3) {
+					String accountList = CPA_Main.showAccount(userList);
+					System.out.println(accountList);
+				}else if(accountOption==4) {
+					
 				}
+					
 			}
+				
+
 
 			else if (userOption == 2) { // add new academic cluster
 
@@ -155,17 +174,7 @@ public class CPA_Main {
 			}
 
 			else if (userOption == 7) { // show all user
-				if (userList.size() > 0) {
-					for (int i = 0; i < userList.size(); i++) {
-						System.out.println("User no. " + i);
-						userList.get(i).showAlluser();
-						Helper.line(30, "-");
-					}
-
-				} else {
-					System.out.println("There is no user in the account list.");
-
-				}
+				
 			} else if (userOption == 0) {
 				System.out.println("Goodbye!");
 
@@ -183,15 +192,26 @@ public class CPA_Main {
 		Helper.line(30, "-");
 
 		// can add on if needed
-		System.out.println("1. Add new user account");
+		System.out.println("1. Manage account");
 		System.out.println("2. Add new academic cluster");
 		System.out.println("3. Manage career information");
 		System.out.println("4. Manage subjects");
 		System.out.println("5. Add new prerequisites");
 		System.out.println("6. Add new pathway");
-		System.out.println("7. Show all user");
-		System.out.println("8. Show all academic cluster");
 		System.out.println("0. Exit");
+		Helper.line(30, "-");
+
+	}
+	public static void accountMenu() {
+
+		Helper.line(30, "-");
+		System.out.println("CARERR PLANNING APPLICATION - Manage Account");
+		Helper.line(30, "-");
+
+		System.out.println("1. Add new user account");
+		System.out.println("2. Delete account");
+		System.out.println("3. Show all account");
+		System.out.println("4. Return back to main menu");
 		Helper.line(30, "-");
 
 	}
@@ -321,6 +341,62 @@ public class CPA_Main {
 		}
 
 		System.out.println(output);
+
+	}
+	public static void addAccount(ArrayList<user> userList, user newUser) {
+		String message="";
+		
+		if (newUser.getUserid() != 0 && !newUser.getName().isEmpty() && !newUser.getRole().isEmpty() && !newUser.getemail().isEmpty() && !newUser.getPassword().isEmpty()) {
+			userList.add(newUser);
+			message="Account has been created";
+
+		} else {
+			message="You did not fill up all required field, add acount failed.";
+		}
+		System.out.println(message);
+		
+	}
+	public static String showAccount(ArrayList<user> userList) {
+
+		String table="";
+		if(userList.size()!=0) {			
+			String tableTitle=String.format("%-5s %-10s %-10s %-10s %-10s\n","ID","NAME","ROLE","EMAIL","PASSWORD");
+			String tableRest="";
+			for (int i=0;i<userList.size();i++) {
+				tableRest=tableRest+String.format("%-5d %-10s %-10s %-10s %-10s\n",userList.get(i).getUserid(),userList.get(i).getName(),userList.get(i).getRole(),userList.get(i).getemail(),userList.get(i).getPassword());
+			}
+			table=tableTitle+tableRest;
+		}else {
+			table="No record of user account found!";
+		}		
+		
+		return table;
+	}
+	public static void deleteAccount(ArrayList<user> userList, int userId) {
+		String message="";
+		
+		boolean foundID=false;
+		
+		for(int i=0;i<userList.size();i++) {
+			if (userList.get(i).getUserid()==userId) {
+				foundID=true;
+					break;
+			}else {
+				foundID=false;
+			}
+		}
+		
+		if (foundID==false) {
+			message="Invalid ID entered!";
+		}else if(foundID==true) {
+			for (int i=0;i<userList.size();i++) {
+				if (userList.get(i).getUserid()==userId) {
+					userList.remove(i);
+					message="Account with user ID "+userId+" is successful deleted!";				
+				}
+			}
+		}
+		System.out.println(message);
 
 	}
 
