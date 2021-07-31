@@ -9,9 +9,9 @@ public class CPA_Main {
 		subject subject3 = new subject(3, "Science", "Compulsory");
 		subject subject4 = new subject(4, "Chinese", "Compulsory");
 		subject subject5 = new subject(5, "Social Studies", "Compulsory");
-		
+
 		ArrayList<subject> subjectlist = new ArrayList<subject>();
-		
+
 		subjectlist.add(subject1);
 		subjectlist.add(subject2);
 		subjectlist.add(subject3);
@@ -22,15 +22,15 @@ public class CPA_Main {
 		ArrayList<user> userList = new ArrayList<user>();
 
 		// careerList
-		career career1 = new career(1, "Architecture and engineering",
-				"People in the architecture and planning fields are responsible for designing new structures or creating aesthetically pleasing, practical and structurally sound environments.",
-				"Architect, Civil engineer, Landscape architect, Sustainable designer, Biomedical engineer");
-		career career2 = new career(2, "Arts, culture and entertainment",
-				"This career field is dedicated to enriching people's lives through culture and the sharing of arts and self-expression.",
-				"Singer/songwriter, Music producer, Art curator, Animator/video game designer, Filmmaker, Graphic designer, Fashion designer, Photographer");
+//		career career1 = new career(1, "Architecture and engineering",
+//				"People in the architecture and planning fields are responsible for designing new structures or creating aesthetically pleasing, practical and structurally sound environments.",
+//				"Architect, Civil engineer, Landscape architect, Sustainable designer, Biomedical engineer");
+//		career career2 = new career(2, "Arts, culture and entertainment",
+//				"This career field is dedicated to enriching people's lives through culture and the sharing of arts and self-expression.",
+//				"Singer/songwriter, Music producer, Art curator, Animator/video game designer, Filmmaker, Graphic designer, Fashion designer, Photographer");
 		ArrayList<career> careerList = new ArrayList<career>();
-		careerList.add(career1);
-		careerList.add(career2);
+//		careerList.add(career1);
+//		careerList.add(career2);
 
 		while (userOption != 0) { // user did not chose exit
 			CPA_Main.MainMenu();// Print main menu
@@ -38,10 +38,10 @@ public class CPA_Main {
 			Helper.line(30, "-");
 
 			if (userOption == 1) { // Manage account
-				CPA_Main.accountMenu();//Print sub menu for account management
+				CPA_Main.accountMenu();// Print sub menu for account management
 				int accountOption = Helper.readInt("Enter your option: ");
 				Helper.line(30, "-");
-					
+
 				if (accountOption == 1) {
 					int userID = Helper.readInt("Enter your id: ");
 					String userName = Helper.readString("Enter user name: ");
@@ -49,35 +49,32 @@ public class CPA_Main {
 					String userEmail = Helper.readString("Enter email: ");
 					String userPassword = Helper.readString("Enter user password: ");
 
-				    user newUser = new user(userID, userName, userRole, userEmail, userPassword);
-				    
-				    CPA_Main.addAccount(userList, newUser);
-		
-					
-				}else if(accountOption == 2) {
+					user newUser = new user(userID, userName, userRole, userEmail, userPassword);
+
+					CPA_Main.addAccount(userList, newUser);
+
+				} else if (accountOption == 2) {
 					String accountList = CPA_Main.showAccount(userList);
 					System.out.println(accountList);
-					if(userList.size()>0) {
+					if (userList.size() > 0) {
 						int userID = Helper.readInt("Enter account id: ");
 						CPA_Main.deleteAccount(userList, userID);
 					}
-				
-				}else if(accountOption==3) {
+
+				} else if (accountOption == 3) {
 					String accountList = CPA_Main.showAccount(userList);
 					System.out.println(accountList);
-				}else if(accountOption==4) {
-					
-				}
-					
-			}
-				
+				} else if (accountOption == 4) {
 
+				}
+
+			}
 
 			else if (userOption == 2) { // add new academic cluster
 
 			}
 
-			else if (userOption == 3) { // add new career information
+			else if (userOption == 3) { // career information
 
 				careerMenu();
 				int careerOption = Helper.readInt("Enter option> ");
@@ -100,7 +97,7 @@ public class CPA_Main {
 				} else if (careerOption == 3) { // delete career
 
 					if (careerList.size() < 1) {
-						System.out.println("No record");
+						System.out.println("No record found");
 					} else {
 						System.out.println(showAllCareer(careerList));
 						Helper.line(30, "-");
@@ -174,7 +171,7 @@ public class CPA_Main {
 			}
 
 			else if (userOption == 7) { // show all user
-				
+
 			} else if (userOption == 0) {
 				System.out.println("Goodbye!");
 
@@ -202,6 +199,7 @@ public class CPA_Main {
 		Helper.line(30, "-");
 
 	}
+
 	public static void accountMenu() {
 
 		Helper.line(30, "-");
@@ -292,39 +290,50 @@ public class CPA_Main {
 		System.out.println("CAREER LIST");
 		Helper.line(30, "-");
 
-		String output = String.format("%-10s %-20s %-40s %-20s \n", "ID", "NAME", "INFORAMTION", "RELAVENT JOB");
+		String output = "";
 
-		for (int i = 0; i < careerList.size(); i++) {
-			output += String.format("%-10d %-20s %-40s %-20s \n", careerList.get(i).getCareer_id(),
-					careerList.get(i).getCareer_name(), careerList.get(i).getCareer_info(),
-					careerList.get(i).getCareer_jobs());
+		if (careerList.size() != 0) {
+			output += String.format("%-10s %-20s %-40s %-20s \n", "ID", "NAME", "INFORAMTION", "RELAVENT JOB");
+
+			for (int i = 0; i < careerList.size(); i++) {
+				output += String.format("%-10d %-20s %-40s %-20s \n", careerList.get(i).getCareer_id(),
+						careerList.get(i).getCareer_name(), careerList.get(i).getCareer_info(),
+						careerList.get(i).getCareer_jobs());
+			}
+		} else {
+			output = "No record found";
 		}
 		return output;
 	}
 
 	public static void addCareer(ArrayList<career> careerList, career newCareer) {
 
-		for (int i = 0; i < careerList.size(); i++) {
-			if (careerList.get(i).getCareer_id() == newCareer.getCareer_id()
-					|| careerList.get(i).getCareer_name() == newCareer.getCareer_name()) {
-				// duplicate of id or name
-				System.out.println("Failed! ID or career name exists");
-				break;
-			} else {
-				// no duplicate, no empty field
-				if (newCareer.getCareer_id() != 0 && !newCareer.getCareer_name().isEmpty()
-						&& !newCareer.getCareer_info().isEmpty() && !newCareer.getCareer_jobs().isEmpty()) { // no empty
-																												// field
-					careerList.add(newCareer);
-					System.out.println("New career has been added successfully");
+		if (careerList.size() != 0) {
+			for (int i = 0; i < careerList.size(); i++) {
+				if (careerList.get(i).getCareer_id() == newCareer.getCareer_id()
+						|| careerList.get(i).getCareer_name() == newCareer.getCareer_name()) {
+					// duplicate of id or name
+					System.out.println("Failed! ID or career name exists");
 					break;
-				} else { // no duplicate and no
-					// no duplicate but get empty field
-					System.out.println("Failed! All fields needed to be filled in.");
-					break;
+				} else {
+					// no duplicate, no empty field
+					if (newCareer.getCareer_id() != 0 && !newCareer.getCareer_name().isEmpty()
+							&& !newCareer.getCareer_info().isEmpty() && !newCareer.getCareer_jobs().isEmpty()) { // no empty field 
+						careerList.add(newCareer);
+						System.out.println("New career has been added successfully");
+						break;
+					} else {
+						// no duplicate but get empty field
+						System.out.println("Failed! All fields needed to be filled in.");
+						break;
+					}
 				}
 			}
+		} else {
+			careerList.add(newCareer);
+			System.out.println("New career has been added successfully");
 		}
+
 	}
 
 	public static void deleteCareer(ArrayList<career> careerList, int careerId) {
@@ -335,7 +344,6 @@ public class CPA_Main {
 			if (careerList.get(i).getCareer_id() == careerId) {
 				careerList.remove(i);
 				output = "Successful! Career deleted";
-//				System.out.println("Successful! Career deleted");
 				break;
 			}
 		}
@@ -343,56 +351,63 @@ public class CPA_Main {
 		System.out.println(output);
 
 	}
+
 	public static void addAccount(ArrayList<user> userList, user newUser) {
-		String message="";
-		
-		if (newUser.getUserid() != 0 && !newUser.getName().isEmpty() && !newUser.getRole().isEmpty() && !newUser.getemail().isEmpty() && !newUser.getPassword().isEmpty()) {
+		String message = "";
+
+		if (newUser.getUserid() != 0 && !newUser.getName().isEmpty() && !newUser.getRole().isEmpty()
+				&& !newUser.getemail().isEmpty() && !newUser.getPassword().isEmpty()) {
 			userList.add(newUser);
-			message="Account has been created";
+			message = "Account has been created";
 
 		} else {
-			message="You did not fill up all required field, add acount failed.";
+			message = "You did not fill up all required field, add acount failed.";
 		}
 		System.out.println(message);
-		
+
 	}
+
 	public static String showAccount(ArrayList<user> userList) {
 
-		String table="";
-		if(userList.size()!=0) {			
-			String tableTitle=String.format("%-5s %-10s %-10s %-10s %-10s\n","ID","NAME","ROLE","EMAIL","PASSWORD");
-			String tableRest="";
-			for (int i=0;i<userList.size();i++) {
-				tableRest=tableRest+String.format("%-5d %-10s %-10s %-10s %-10s\n",userList.get(i).getUserid(),userList.get(i).getName(),userList.get(i).getRole(),userList.get(i).getemail(),userList.get(i).getPassword());
+		String table = "";
+		if (userList.size() != 0) {
+			String tableTitle = String.format("%-5s %-10s %-10s %-10s %-10s\n", "ID", "NAME", "ROLE", "EMAIL",
+					"PASSWORD");
+			String tableRest = "";
+			for (int i = 0; i < userList.size(); i++) {
+				tableRest = tableRest + String.format("%-5d %-10s %-10s %-10s %-10s\n", userList.get(i).getUserid(),
+						userList.get(i).getName(), userList.get(i).getRole(), userList.get(i).getemail(),
+						userList.get(i).getPassword());
 			}
-			table=tableTitle+tableRest;
-		}else {
-			table="No record of user account found!";
-		}		
-		
+			table = tableTitle + tableRest;
+		} else {
+			table = "No record of user account found!";
+		}
+
 		return table;
 	}
+
 	public static void deleteAccount(ArrayList<user> userList, int userId) {
-		String message="";
-		
-		boolean foundID=false;
-		
-		for(int i=0;i<userList.size();i++) {
-			if (userList.get(i).getUserid()==userId) {
-				foundID=true;
-					break;
-			}else {
-				foundID=false;
+		String message = "";
+
+		boolean foundID = false;
+
+		for (int i = 0; i < userList.size(); i++) {
+			if (userList.get(i).getUserid() == userId) {
+				foundID = true;
+				break;
+			} else {
+				foundID = false;
 			}
 		}
-		
-		if (foundID==false) {
-			message="Invalid ID entered!";
-		}else if(foundID==true) {
-			for (int i=0;i<userList.size();i++) {
-				if (userList.get(i).getUserid()==userId) {
+
+		if (foundID == false) {
+			message = "Invalid ID entered!";
+		} else if (foundID == true) {
+			for (int i = 0; i < userList.size(); i++) {
+				if (userList.get(i).getUserid() == userId) {
 					userList.remove(i);
-					message="Account with user ID "+userId+" is successful deleted!";				
+					message = "Account with user ID " + userId + " is successful deleted!";
 				}
 			}
 		}
