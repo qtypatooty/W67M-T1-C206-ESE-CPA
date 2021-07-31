@@ -284,6 +284,18 @@ public class CPA_Main {
 		Helper.line(30, "-");
 	}
 
+	public static String retrieveAllCareer(ArrayList<career> careerList) {
+		
+		String output = "";
+		
+		for (int i = 0; i < careerList.size(); i++) {
+			output += String.format("%-10d %-35s %-100s %-20s \n", careerList.get(i).getCareer_id(),
+					careerList.get(i).getCareer_name(), careerList.get(i).getCareer_info(),
+					careerList.get(i).getCareer_jobs());
+		}
+		return output;
+	}
+	
 	public static String showAllCareer(ArrayList<career> careerList) {
 
 		Helper.line(30, "-");
@@ -295,11 +307,7 @@ public class CPA_Main {
 		if (careerList.size() != 0) {
 			output += String.format("%-10s %-35s %-100s %-20s \n", "ID", "NAME", "INFORAMTION", "RELAVENT JOB");
 
-			for (int i = 0; i < careerList.size(); i++) {
-				output += String.format("%-10d %-35s %-100s %-20s \n", careerList.get(i).getCareer_id(),
-						careerList.get(i).getCareer_name(), careerList.get(i).getCareer_info(),
-						careerList.get(i).getCareer_jobs());
-			}
+			output += retrieveAllCareer(careerList);
 		} else {
 			output = "No record found";
 		}
@@ -329,19 +337,6 @@ public class CPA_Main {
 							break;
 						}
 					}
-					
-//					// no duplicate, no empty field
-//					if (newCareer.getCareer_id() != 0 && !newCareer.getCareer_name().isEmpty()
-//							&& !newCareer.getCareer_info().isEmpty() && !newCareer.getCareer_jobs().isEmpty()) { // no empty field 
-//						careerList.add(newCareer);
-//						System.out.println("New career has been added successfully");
-//						break;
-//					} else {
-//						// no duplicate but get empty field
-//						System.out.println("Failed! All fields needed to be filled in.");
-//						break;
-//					}
-					
 				}
 			}
 		} else {
