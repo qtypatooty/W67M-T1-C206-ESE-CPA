@@ -22,15 +22,15 @@ public class CPA_Main {
 		ArrayList<user> userList = new ArrayList<user>();
 
 		// careerList
-//		career career1 = new career(1, "Architecture and engineering",
-//				"People in the architecture and planning fields are responsible for designing new structures or creating aesthetically pleasing, practical and structurally sound environments.",
-//				"Architect, Civil engineer, Landscape architect, Sustainable designer, Biomedical engineer");
-//		career career2 = new career(2, "Arts, culture and entertainment",
-//				"This career field is dedicated to enriching people's lives through culture and the sharing of arts and self-expression.",
-//				"Singer/songwriter, Music producer, Art curator, Animator/video game designer, Filmmaker, Graphic designer, Fashion designer, Photographer");
+		career career1 = new career(1, "Architecture and engineering",
+				"Design new structures/create aesthetically pleasing and structurally sound environments",
+				"Architect, Civil engineer, Landscape architect");
+		career career2 = new career(2, "Arts, culture and entertainment",
+				"Enriching lives through culture and sharing of arts and self-expression",
+				"Singer/songwriter, Music producer, Fashion designer");
 		ArrayList<career> careerList = new ArrayList<career>();
-//		careerList.add(career1);
-//		careerList.add(career2);
+		careerList.add(career1);
+		careerList.add(career2);
 
 		while (userOption != 0) { // user did not chose exit
 			CPA_Main.MainMenu();// Print main menu
@@ -87,7 +87,7 @@ public class CPA_Main {
 
 					int careerId = Helper.readInt("Enter ID of career> ");
 					String careerName = Helper.readString("Enter the name of career> ");
-					String careerInfo = Helper.readString("Enter the information of the career> ");
+					String careerInfo = Helper.readString("Enter the information of the career (max 100 charcter)> ");
 					String careerJob = Helper.readString("Enter jobs> ");
 
 					career newcareer = new career(careerId, careerName, careerInfo, careerJob);
@@ -293,10 +293,10 @@ public class CPA_Main {
 		String output = "";
 
 		if (careerList.size() != 0) {
-			output += String.format("%-10s %-20s %-40s %-20s \n", "ID", "NAME", "INFORAMTION", "RELAVENT JOB");
+			output += String.format("%-10s %-35s %-100s %-20s \n", "ID", "NAME", "INFORAMTION", "RELAVENT JOB");
 
 			for (int i = 0; i < careerList.size(); i++) {
-				output += String.format("%-10d %-20s %-40s %-20s \n", careerList.get(i).getCareer_id(),
+				output += String.format("%-10d %-35s %-100s %-20s \n", careerList.get(i).getCareer_id(),
 						careerList.get(i).getCareer_name(), careerList.get(i).getCareer_info(),
 						careerList.get(i).getCareer_jobs());
 			}
@@ -308,25 +308,40 @@ public class CPA_Main {
 
 	public static void addCareer(ArrayList<career> careerList, career newCareer) {
 
-		if (careerList.size() != 0) {
+		if (careerList.size() != 0) { // if not empty 
 			for (int i = 0; i < careerList.size(); i++) {
 				if (careerList.get(i).getCareer_id() == newCareer.getCareer_id()
-						|| careerList.get(i).getCareer_name() == newCareer.getCareer_name()) {
-					// duplicate of id or name
+						|| careerList.get(i).getCareer_name().equalsIgnoreCase(newCareer.getCareer_name())) { // duplicate of id or name
 					System.out.println("Failed! ID or career name exists");
 					break;
 				} else {
-					// no duplicate, no empty field
-					if (newCareer.getCareer_id() != 0 && !newCareer.getCareer_name().isEmpty()
-							&& !newCareer.getCareer_info().isEmpty() && !newCareer.getCareer_jobs().isEmpty()) { // no empty field 
-						careerList.add(newCareer);
-						System.out.println("New career has been added successfully");
-						break;
-					} else {
-						// no duplicate but get empty field
+					// no duplicate but got empty field 
+					if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().isEmpty() || newCareer.getCareer_info().isEmpty() || newCareer.getCareer_jobs().isEmpty()) {
 						System.out.println("Failed! All fields needed to be filled in.");
 						break;
+					} else { // no duplicate and empty field 
+						if (newCareer.getCareer_info().length() > 100) { // info too long 
+							System.out.println("Too much information entered");
+							break;
+						} else {
+							careerList.add(newCareer);
+							System.out.println("New career has been added successfully");
+							break;
+						}
 					}
+					
+//					// no duplicate, no empty field
+//					if (newCareer.getCareer_id() != 0 && !newCareer.getCareer_name().isEmpty()
+//							&& !newCareer.getCareer_info().isEmpty() && !newCareer.getCareer_jobs().isEmpty()) { // no empty field 
+//						careerList.add(newCareer);
+//						System.out.println("New career has been added successfully");
+//						break;
+//					} else {
+//						// no duplicate but get empty field
+//						System.out.println("Failed! All fields needed to be filled in.");
+//						break;
+//					}
+					
 				}
 			}
 		} else {
