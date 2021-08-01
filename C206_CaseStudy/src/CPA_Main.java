@@ -155,7 +155,7 @@ public class CPA_Main {
 						System.out.println("That subject ID does not exist!");
 					}
 					break;
-				case 5:
+				case 4:
 					break;
 				}
 			} else if (userOption == 4) { // add new subject
@@ -219,8 +219,7 @@ public class CPA_Main {
 		System.out.println("1. Add subject");
 		System.out.println("2. View my subjects");
 		System.out.println("3. Delete subject");
-		System.out.println("4. Search subjects");
-		System.out.println("5. Return back to main menu");
+		System.out.println("4. Return back to main menu");
 
 	}
 
@@ -285,9 +284,9 @@ public class CPA_Main {
 	}
 
 	public static String retrieveAllCareer(ArrayList<career> careerList) {
-		
+
 		String output = "";
-		
+
 		for (int i = 0; i < careerList.size(); i++) {
 			output += String.format("%-10d %-35s %-100s %-20s \n", careerList.get(i).getCareer_id(),
 					careerList.get(i).getCareer_name(), careerList.get(i).getCareer_info(),
@@ -295,7 +294,7 @@ public class CPA_Main {
 		}
 		return output;
 	}
-	
+
 	public static String showAllCareer(ArrayList<career> careerList) {
 
 		Helper.line(30, "-");
@@ -316,19 +315,23 @@ public class CPA_Main {
 
 	public static void addCareer(ArrayList<career> careerList, career newCareer) {
 
-		if (careerList.size() != 0) { // if not empty 
+		if (careerList.size() != 0) { // if not empty
 			for (int i = 0; i < careerList.size(); i++) {
 				if (careerList.get(i).getCareer_id() == newCareer.getCareer_id()
-						|| careerList.get(i).getCareer_name().equalsIgnoreCase(newCareer.getCareer_name())) { // duplicate of id or name
+						|| careerList.get(i).getCareer_name().equalsIgnoreCase(newCareer.getCareer_name())) { // duplicate
+																												// of id
+																												// or
+																												// name
 					System.out.println("Failed! ID or career name exists");
 					break;
 				} else {
-					// no duplicate but got empty field 
-					if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().isEmpty() || newCareer.getCareer_info().isEmpty() || newCareer.getCareer_jobs().isEmpty()) {
+					// no duplicate but got empty field
+					if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().isEmpty()
+							|| newCareer.getCareer_info().isEmpty() || newCareer.getCareer_jobs().isEmpty()) {
 						System.out.println("Failed! All fields needed to be filled in.");
 						break;
-					} else { // no duplicate and empty field 
-						if (newCareer.getCareer_info().length() > 100) { // info too long 
+					} else { // no duplicate and empty field
+						if (newCareer.getCareer_info().length() > 100) { // info too long
 							System.out.println("Too much information entered");
 							break;
 						} else {
