@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class C206_CaseStudyTest {
+	//account user
 
 	// career
 	private career career1;
