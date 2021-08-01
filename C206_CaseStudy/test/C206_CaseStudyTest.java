@@ -11,6 +11,15 @@ import org.junit.Test;
 
 public class C206_CaseStudyTest {
 	//account user
+	private user user1;
+	private user user2;
+	private user user3;
+	private user user4;
+	private user user5;
+	private user user6;
+	
+	
+	private ArrayList<user> userList;
 
 	// career
 	private career career1;
@@ -32,6 +41,14 @@ public class C206_CaseStudyTest {
 
 	@Before
 	public void setUp() throws Exception {
+		//user
+		user1=new user(1,"","Student","test1@email.com","password1"); //user with empty name;
+		user2=new user(2,"Name2","","test1@email.com","password1"); //user with empty role;
+		user3=new user(3,"Name3","Staff","","password1"); //user with empty email;
+		user4=new user(4,"Name4","Student","test4@email.com",""); //user with empty password;
+		user5=new user(5,"Name5","Student","test5@email.com","password5"); //user that has all information filled;
+		user6=new user(6,"Name6","Student","test6@email.com","password6"); //user that has all information filled;
+		
 
 		// career
 		career1 = new career(1, "Architecture and engineering",
@@ -49,6 +66,74 @@ public class C206_CaseStudyTest {
 		subjectlist = new ArrayList<subject>();
 
 	}
+	
+	@Test
+	public void testAddUser() {
+		assertNotNull("Test that user list is not null, so that a new item can be added to.", userList);
+		
+		CPA_Main.addAccount(userList, user1);
+		assertEquals("Test that user list equals to 0 as user 1 did not fill up all required filed", 0, userList.size());
+		
+		CPA_Main.addAccount(userList, user2);
+		assertEquals("Test that user list equals to 0 as user 2 did not fill up all required filed", 0, userList.size());
+		
+		CPA_Main.addAccount(userList, user3);
+		assertEquals("Test that user list equals to 0 as user 3 did not fill up all required filed", 0, userList.size());
+		
+		CPA_Main.addAccount(userList, user4);
+		assertEquals("Test that user list equals to 0 as user 4 did not fill up all required filed", 0, userList.size());
+		
+		CPA_Main.addAccount(userList, user5);
+		assertEquals("Test that user list equals to 1 as user 5 fill up all required filed,thus is added successfully", 1, userList.size());
+		assertSame(user5, userList.get(0));
+		//Test that the user just added is as same as the 1st item of the list.
+				
+	}
+	
+	@Test
+	public void testShowUserList() {
+		assertNotNull("Test that user list is not null, so that a new item can be added to.", userList);
+		String accountList = CPA_Main.showAccount(userList);//currently empty
+		String output="";//output will be empty
+		assertEquals("Test that there is nothing in the user list when print", output, accountList);
+		
+		CPA_Main.addAccount(userList, user5);
+		CPA_Main.addAccount(userList, user6);
+		//2 valid user are added to the user list.
+		String output2=String.format("%-5d %-10s %-10s %-10s %-10s\n", userList.get(0).getUserid(),
+				userList.get(0).getName(), userList.get(0).getRole(), userList.get(0).getemail(),
+				userList.get(0).getPassword());
+		output2+=String.format("%-5d %-10s %-10s %-10s %-10s\n", userList.get(1).getUserid(),
+				userList.get(1).getName(), userList.get(1).getRole(), userList.get(1).getemail(),
+				userList.get(1).getPassword());
+		assertEquals("Test that the user list are printed correctly with the added users", output2, accountList);
+						
+			
+	}
+	
+	@Test
+	public void testDeleteUser() {
+		
+		CPA_Main.addAccount(userList, user5);
+		CPA_Main.addAccount(userList, user6);
+		assertNotNull("Test that user list is not null, so that a new item can be delete to.", userList);
+		assertEquals("test that the size of the list is 2", 2, userList.size());
+		
+		CPA_Main.deleteAccount(userList, 0);
+		assertEquals("test that the size of the list is 2 as an invalid id is entered", 2, userList.size());
+		
+		
+		CPA_Main.deleteAccount(userList, 5);
+		assertEquals("test that the size of the list is 1 after delete one item", 1, userList.size());
+		assertSame(user6, userList.get(0));
+		//test that after user 5 is deleted the only user left is user 6.
+		
+		CPA_Main.deleteAccount(userList, 6);
+		assertEquals("test that the size of the list is 0 after delete both user added to the list", 0, userList.size());
+		
+				
+	}
+	
 
 	@Test
 	public void testRetrieveAllCareer() {
@@ -95,6 +180,7 @@ public class C206_CaseStudyTest {
 		assertEquals("test if the id input is same as the id of item", id1, career1.getCareer_id());
 
 		assertEquals("test if the size of the list is 0 after one item being deleted", 0, careerList.size());
+		
 
 	}
 
