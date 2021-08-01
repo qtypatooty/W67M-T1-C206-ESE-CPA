@@ -31,6 +31,8 @@ public class CPA_Main {
 		ArrayList<career> careerList = new ArrayList<career>();
 		careerList.add(career1);
 		careerList.add(career2);
+		
+		ArrayList<prerequisites> prerequisitesList = new ArrayList<prerequisites>();
 
 		while (userOption != 0) { // user did not chose exit
 			CPA_Main.MainMenu();// Print main menu
@@ -158,15 +160,50 @@ public class CPA_Main {
 				case 4:
 					break;
 				}
-			} else if (userOption == 4) { // add new subject
+			} 
 
+			else if (userOption == 5) { // add new prerequisites
+				prerequisitemenu();
+				int prechoice = Helper.readInt("Enter your option: ");
+				
+				switch(prechoice) {
+				case 1: 
+						String output = viewPrerequisites(prerequisitesList);
+						System.out.println(output);
+						
+						break;
+					
+				case 2: 
+							
+						int prereqID = Helper.readInt("Enter prerequisite id: ");
+						int subjectID = Helper.readInt("Enter subject id: ");
+						String relationship = Helper.readString("Enter relationship(s): ");
+						String criteria = Helper.readString("Enter criteria: ");
+						String description = Helper.readString("Enter description: ");
+
+						
+
+						addPrerequisites(prerequisitesList, prereqID, subjectID, relationship, criteria, description);
+						
+						break;
+						
+				case 3:
+						viewPrerequisites(prerequisitesList);
+						int prerequisiteID = Helper.readInt("Enter ID of prerequisite you want to delete: ");
+						
+						String message = deletePrerequisite(prerequisitesList, prerequisiteID);
+						System.out.println(message);
+						
+						break;
+				case 4: 
+						break;
+					
+						
+				}
+				
 			}
 
-			else if (userOption == 5) { // add new pathway
-
-			}
-
-			else if (userOption == 6) { // add new career information
+			else if (userOption == 6) { // add new pathway
 
 			}
 
@@ -193,7 +230,7 @@ public class CPA_Main {
 		System.out.println("2. Add new academic cluster");
 		System.out.println("3. Manage career information");
 		System.out.println("4. Manage subjects");
-		System.out.println("5. Add new prerequisites");
+		System.out.println("5. Manage prerequisites");
 		System.out.println("6. Add new pathway");
 		System.out.println("0. Exit");
 		Helper.line(30, "-");
@@ -428,4 +465,69 @@ public class CPA_Main {
 
 	}
 
+	public static void prerequisitemenu() {
+		System.out.println("1. View all prerequisites");
+		System.out.println("2. Add new prerequisites");
+		System.out.println("3. Delete prerequisites");
+		System.out.println("4. Return to main menu");
+		Helper.line(30, "-");
+	}
+	
+	public static String viewPrerequisites(ArrayList<prerequisites> prerequisitesList) {
+
+		
+		Helper.line(30, "-");
+		System.out.println("PREREQUISITES LIST");
+		Helper.line(30, "-");
+
+		String output = "";
+
+		if (prerequisitesList.size() != 0) {
+			output += String.format("%-10s %-10s %-20s %-20s %-100s \n", "ID", "SUBJECT ID", "CRITERIA", "RELATIONSHIP", "DESCRIPTION");
+
+			for (int i = 0; i < prerequisitesList.size(); i++) {
+				output += String.format("%-10d %-35s %-100s %-20s \n", prerequisitesList.get(i).getPrerequisitesId(),
+						prerequisitesList.get(i).getsubject_id(), prerequisitesList.get(i).getcriteria(),
+						prerequisitesList.get(i).getrelationship(), prerequisitesList.get(i).getDescription());
+			}
+		} else {
+			output = "No record found";
+		}
+		return output;
+	}
+
+	public static void addPrerequisites(ArrayList<prerequisites> prerequisitesList, int prerequisites_id, int subject_id, String relationships, String criteria, String description) {
+
+		prerequisites newreq = new prerequisites(prerequisites_id, subject_id, relationships, criteria, description);
+				prerequisitesList.add(newreq);
+
+	}
+	
+	public static String deletePrerequisite(ArrayList<prerequisites> prerequisitesList, int prerequisiteID) {
+		String message = "";
+
+		boolean found = false;
+
+		for (int i = 0; i < prerequisitesList.size(); i++) {
+			if (prerequisitesList.get(i).getPrerequisitesId() == prerequisiteID) {
+				found = true;
+				break;
+			} else {
+				found = false;
+			}
+		}
+
+		if (found == false) {
+			message = "No prerequisite ID exists";
+		} else if (found == true) {
+			for (int i = 0; i < prerequisitesList.size(); i++) {
+				if (prerequisitesList.get(i).getPrerequisitesId() == prerequisiteID) {
+					prerequisitesList.remove(i);
+					message = "Successfully deleted!";
+				}
+			}
+		}
+		return message;
+
+	}
 }

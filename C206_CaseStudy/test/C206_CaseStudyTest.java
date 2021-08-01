@@ -26,6 +26,8 @@ public class C206_CaseStudyTest {
 	public C206_CaseStudyTest() {
 		super();
 	}
+	
+	private ArrayList<prerequisites> prerequisitesList;
 
 	@Before
 	public void setUp() throws Exception {
@@ -151,6 +153,42 @@ public class C206_CaseStudyTest {
 		careerList = null;
 		
 	}
+	
+	
+	@Test
+	public void testviewprerequisites() {
+		assertNotNull("test if arraylist is empty", prerequisitesList);
+	
+		assertEquals("test if arraylist is the same", CPA_Main.viewPrerequisites(prerequisitesList), prerequisitesList);
+	
+		CPA_Main.addPrerequisites(prerequisitesList, 1, 10, "IT", "Basic Programming", "Advanced programming");
+		
+		assertEquals("test if array size is updated", 1, prerequisitesList.size());
+	}
+	
+	@Test
+	public void testAddPrerequisites() {
+
+		CPA_Main.addPrerequisites(prerequisitesList, 1, 10, "Design", "Adobe", "Design XD");
+		assertEquals("test if size increase after adding", 1, prerequisitesList.size());
+
+		assertEquals("test if arraylist is the same", CPA_Main.viewPrerequisites(prerequisitesList), prerequisitesList);
+
+		
+	}
+	
+	@Test
+	public void testDeletePrerequisite() {
+
+		CPA_Main.addPrerequisites(prerequisitesList, 1, 10, "Design", "Adobe", "Design XD");
+		assertEquals("test if after adding the list is 1", 1, subjectlist.size());
+
+		int idpre = 1;
+		CPA_Main.deletePrerequisite(prerequisitesList, idpre);
+		assertEquals("test if arraylist goes back to 0 after deletion", 0, subjectlist.size());
+
+	}
+	
 
 	@Test
 	public void c206_test() {
