@@ -144,6 +144,12 @@ public class C206_CaseStudyTest {
 
 	@After
 	public void tearDown() throws Exception {
+		
+		//career
+		career1 = null;
+		career2 = null;
+		careerList = null;
+		
 	}
 
 	@Test
