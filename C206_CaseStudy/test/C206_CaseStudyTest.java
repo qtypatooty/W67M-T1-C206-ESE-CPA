@@ -250,9 +250,13 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testviewprerequisites() {
-		assertNotNull("test if arraylist is empty", prerequisitesList);
+
+		String actuallist = CPA_Main.viewPrerequisites(prerequisitesList);
+		String testoutput = "No record found";
+		
+
 	
-		assertEquals("test if arraylist is the same", CPA_Main.viewPrerequisites(prerequisitesList), prerequisitesList);
+		assertEquals("test if arraylist is the same",testoutput,actuallist);
 	
 		CPA_Main.addPrerequisites(prerequisitesList, prereq1);
 		
@@ -266,7 +270,7 @@ public class C206_CaseStudyTest {
 		prerequisitesList.add(prereq2);
 		assertEquals("test if size increase after adding", 2, prerequisitesList.size());
 
-		assertEquals("test if arraylist is the same", CPA_Main.viewPrerequisites(prerequisitesList), prerequisitesList);
+		assertEquals("test if arraylist is the same", prereq2, prerequisitesList.get(1));
 
 		
 	}
@@ -276,11 +280,11 @@ public class C206_CaseStudyTest {
 
 		
 		CPA_Main.addPrerequisites(prerequisitesList, prereq1);
-		assertEquals("test if after adding the list is 1", 1, subjectlist.size());
+		assertEquals("test if after adding the list is 1", 1, prerequisitesList.size());
 
 		int idpre = 1;
 		CPA_Main.deletePrerequisite(prerequisitesList, idpre);
-		assertEquals("test if arraylist goes back to 0 after deletion", 0, subjectlist.size());
+		assertEquals("test if arraylist goes back to 0 after deletion", 0, prerequisitesList.size());
 
 	}
 	
