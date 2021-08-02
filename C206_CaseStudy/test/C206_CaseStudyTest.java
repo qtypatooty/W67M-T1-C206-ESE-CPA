@@ -49,6 +49,8 @@ public class C206_CaseStudyTest {
 		user5=new user(5,"Name5","Student","test5@email.com","password5"); //user that has all information filled;
 		user6=new user(6,"Name6","Student","test6@email.com","password6"); //user that has all information filled;
 		
+		userList= new ArrayList<user>();
+		
 
 		// career
 		career1 = new career(1, "Architecture and engineering",
@@ -94,19 +96,22 @@ public class C206_CaseStudyTest {
 	public void testShowUserList() {
 		assertNotNull("Test that user list is not null, so that a new item can be added to.", userList);
 		String accountList = CPA_Main.showAccount(userList);//currently empty
-		String output="";//output will be empty
+		String output="No record of user account found!";//output will be empty
 		assertEquals("Test that there is nothing in the user list when print", output, accountList);
 		
 		CPA_Main.addAccount(userList, user5);
 		CPA_Main.addAccount(userList, user6);
 		//2 valid user are added to the user list.
-		String output2=String.format("%-5d %-10s %-10s %-10s %-10s\n", userList.get(0).getUserid(),
+		String accountList2 = CPA_Main.showAccount(userList);
+		String output2=String.format("%-5s %-10s %-10s %-10s %-10s\n", "ID", "NAME", "ROLE", "EMAIL",
+				"PASSWORD");
+		output2+=String.format("%-5d %-10s %-10s %-10s %-10s\n", userList.get(0).getUserid(),
 				userList.get(0).getName(), userList.get(0).getRole(), userList.get(0).getemail(),
 				userList.get(0).getPassword());
 		output2+=String.format("%-5d %-10s %-10s %-10s %-10s\n", userList.get(1).getUserid(),
 				userList.get(1).getName(), userList.get(1).getRole(), userList.get(1).getemail(),
 				userList.get(1).getPassword());
-		assertEquals("Test that the user list are printed correctly with the added users", output2, accountList);
+		assertEquals("Test that the user list are printed correctly with the added users", output2, accountList2);
 						
 			
 	}
