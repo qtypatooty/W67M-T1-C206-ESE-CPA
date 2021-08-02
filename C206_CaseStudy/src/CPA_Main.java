@@ -181,9 +181,9 @@ public class CPA_Main {
 						String criteria = Helper.readString("Enter criteria: ");
 						String description = Helper.readString("Enter description: ");
 
-						
+						prerequisites prereqnew = new prerequisites(prereqID, subjectID, relationship, criteria, description);
 
-						addPrerequisites(prerequisitesList, prereqID, subjectID, relationship, criteria, description);
+						addPrerequisites(prerequisitesList, prereqnew);
 						
 						break;
 						
@@ -496,10 +496,11 @@ public class CPA_Main {
 		return output;
 	}
 
-	public static void addPrerequisites(ArrayList<prerequisites> prerequisitesList, int prerequisites_id, int subject_id, String relationships, String criteria, String description) {
+	public static void addPrerequisites(ArrayList<prerequisites> prerequisitesList, prerequisites newreq) {
 
-		prerequisites newreq = new prerequisites(prerequisites_id, subject_id, relationships, criteria, description);
-				prerequisitesList.add(newreq);
+
+		
+		prerequisitesList.add(newreq);
 
 	}
 	

@@ -32,6 +32,11 @@ public class C206_CaseStudyTest {
 	private subject subject2;
 
 	private ArrayList<subject> subjectlist;
+	
+	private prerequisites prereq1;
+	private prerequisites prereq2;
+	
+	private ArrayList<prerequisites> prereqList;
 
 	public C206_CaseStudyTest() {
 		super();
@@ -66,6 +71,10 @@ public class C206_CaseStudyTest {
 		subject1 = new subject(1, "English", "Compulsory");
 		subject2 = new subject(2, "Mathematics", "Compulsory");
 		subjectlist = new ArrayList<subject>();
+		
+		prereq1 = new prerequisites(1, 10, "Design", "Adobe", "Design XD");
+		prereq2 = new prerequisites(2, 100, "JavaScript", "Programming", "Coding Java");
+		prerequisitesList = new ArrayList<prerequisites>();
 
 	}
 	
@@ -236,15 +245,7 @@ public class C206_CaseStudyTest {
 
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		
-		//career
-		career1 = null;
-		career2 = null;
-		careerList = null;
-		
-	}
+
 	
 	
 	@Test
@@ -253,7 +254,7 @@ public class C206_CaseStudyTest {
 	
 		assertEquals("test if arraylist is the same", CPA_Main.viewPrerequisites(prerequisitesList), prerequisitesList);
 	
-		CPA_Main.addPrerequisites(prerequisitesList, 1, 10, "IT", "Basic Programming", "Advanced programming");
+		CPA_Main.addPrerequisites(prerequisitesList, prereq1);
 		
 		assertEquals("test if array size is updated", 1, prerequisitesList.size());
 	}
@@ -261,8 +262,9 @@ public class C206_CaseStudyTest {
 	@Test
 	public void testAddPrerequisites() {
 
-		CPA_Main.addPrerequisites(prerequisitesList, 1, 10, "Design", "Adobe", "Design XD");
-		assertEquals("test if size increase after adding", 1, prerequisitesList.size());
+		prerequisitesList.add(prereq1);
+		prerequisitesList.add(prereq2);
+		assertEquals("test if size increase after adding", 2, prerequisitesList.size());
 
 		assertEquals("test if arraylist is the same", CPA_Main.viewPrerequisites(prerequisitesList), prerequisitesList);
 
@@ -272,7 +274,8 @@ public class C206_CaseStudyTest {
 	@Test
 	public void testDeletePrerequisite() {
 
-		CPA_Main.addPrerequisites(prerequisitesList, 1, 10, "Design", "Adobe", "Design XD");
+		
+		CPA_Main.addPrerequisites(prerequisitesList, prereq1);
 		assertEquals("test if after adding the list is 1", 1, subjectlist.size());
 
 		int idpre = 1;
@@ -286,6 +289,16 @@ public class C206_CaseStudyTest {
 	public void c206_test() {
 		// fail("Not yet implemented");
 		assertTrue("C206_CaseStudy_SampleTest ", true);
+	}
+	
+	@After
+	public void tearDown() throws Exception {
+		
+		//career
+		career1 = null;
+		career2 = null;
+		careerList = null;
+		
 	}
 
 }
