@@ -470,13 +470,13 @@ public class CPA_Main {
 		String output = "";
 
 		if (prerequisitesList.size() != 0) {
-			output += String.format("%-10s %-10s %-20s %-20s %-100s \n", "ID", "SUBJECT ID", "CRITERIA", "RELATIONSHIP",
-					"DESCRIPTION");
+			output += String.format("%-5s %-30s %-30s %-30s %-25s \n", "ID", "PREREQUISITE SUBJECT ID", "PREREQUISITE SUBJECT DESCRIPTION", "PREREQUISITE GRADE",
+					"PREREQUISITE CRITERIA DESCRIPTION");
 
 			for (int i = 0; i < prerequisitesList.size(); i++) {
-				output += String.format("%-10d %-35s %-100s %-20s \n", prerequisitesList.get(i).getPrerequisitesId(),
-						prerequisitesList.get(i).getsubject_id(), prerequisitesList.get(i).getcriteria(),
-						prerequisitesList.get(i).getrelationship(), prerequisitesList.get(i).getDescription());
+				output += String.format("%-5s %-30s %-30s %-30s %-25s \n", prerequisitesList.get(i).getPrerequisitesId(),
+						prerequisitesList.get(i).getsubject_id(), prerequisitesList.get(i).getrelationship(), 
+						prerequisitesList.get(i).getcriteria(), prerequisitesList.get(i).getDescription());
 			}
 		} else {
 			output = "No record found";
