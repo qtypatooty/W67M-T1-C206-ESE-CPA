@@ -72,11 +72,7 @@ public class CPA_Main {
 
 			}
 
-			else if (userOption == 2) { // add new academic cluster
-
-			}
-
-			else if (userOption == 3) { // career information
+			else if (userOption == 2) { // career information
 
 				careerMenu();
 				int careerOption = Helper.readInt("Enter option> ");
@@ -114,7 +110,7 @@ public class CPA_Main {
 
 			}
 
-			else if (userOption == 4) { // add new subject
+			else if (userOption == 3) { // add new subject
 				CPA_Main.SMenu();
 				int subjectOptions = Helper.readInt("Enter choice > ");
 				switch (subjectOptions) {
@@ -162,7 +158,7 @@ public class CPA_Main {
 				}
 			} 
 
-			else if (userOption == 5) { // add new prerequisites
+			else if (userOption == 4) { // add new prerequisites
 				prerequisitemenu();
 				int prechoice = Helper.readInt("Enter your option: ");
 				
@@ -221,10 +217,9 @@ public class CPA_Main {
 
 		// can add on if needed
 		System.out.println("1. Manage account");
-		System.out.println("2. Add new academic cluster");
-		System.out.println("3. Manage career information");
-		System.out.println("4. Manage subjects");
-		System.out.println("5. Manage prerequisites");
+		System.out.println("2. Manage career information");
+		System.out.println("3. Manage subjects");
+		System.out.println("4. Manage prerequisites");
 		System.out.println("0. Exit");
 		Helper.line(30, "-");
 
@@ -236,7 +231,7 @@ public class CPA_Main {
 		System.out.println("CARERR PLANNING APPLICATION - Manage Account");
 		Helper.line(30, "-");
 
-		System.out.println("1. Add new user account");
+		System.out.println("1. Register new user account");
 		System.out.println("2. Delete account");
 		System.out.println("3. Show all account");
 		System.out.println("4. Return back to main menu");
