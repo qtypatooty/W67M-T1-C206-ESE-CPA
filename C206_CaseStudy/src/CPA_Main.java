@@ -203,13 +203,7 @@ public class CPA_Main {
 				
 			}
 
-			else if (userOption == 6) { // add new pathway
-
-			}
-
-			else if (userOption == 7) { // show all user
-
-			} else if (userOption == 0) {
+			else if (userOption == 0) {
 				System.out.println("Goodbye!");
 
 			} else {
@@ -231,7 +225,6 @@ public class CPA_Main {
 		System.out.println("3. Manage career information");
 		System.out.println("4. Manage subjects");
 		System.out.println("5. Manage prerequisites");
-		System.out.println("6. Add new pathway");
 		System.out.println("0. Exit");
 		Helper.line(30, "-");
 
