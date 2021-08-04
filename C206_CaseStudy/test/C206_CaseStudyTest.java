@@ -169,23 +169,23 @@ public class C206_CaseStudyTest {
 	public void testShowAllCareer() {
 
 		assertNotNull("test if the carrer arraylist is valid to add to", careerList);
-
-		String showCareerEmpty = CPA_Main.showAllCareer(careerList); // currently empty
-		String outputEmpty = "No record found"; // output for empty file
-		assertEquals("test that the ouput is shown correctly when there is no record in the arraylist", outputEmpty,
-				showCareerEmpty);
-
+		
+		String showCareerEmpty = CPA_Main.showAllCareer(careerList); //currently empty
+		String outputEmpty = "No record found"; //output for empty file
+		assertEquals("test that the ouput is shown correctly when there is no record in the arraylist", outputEmpty, showCareerEmpty);
+		
 		CPA_Main.addCareer(careerList, career1);
 		CPA_Main.addCareer(careerList, career2);
-		// 2 valid user are added to the user list.
+		//2 valid user are added to the user list.
 		String showCareerList = CPA_Main.showAllCareer(careerList);
-		String output = String.format("%-10s %-35s %-100s %-20s \n", "ID", "NAME", "INFORAMTION", "RELAVENT JOB");
+		String output = String.format("%-10s %-35s %-100s %-20s \n", "ID", "CAREER GROUP", "GROUP DESCRIPTION", "RELAVENT JOB");
 		output += String.format("%-10d %-35s %-100s %-20s \n", careerList.get(0).getCareer_id(),
-				careerList.get(0).getCareer_name(), careerList.get(0).getCareer_info(),
-				careerList.get(0).getCareer_jobs());
+					careerList.get(0).getCareer_name(), careerList.get(0).getCareer_info(),
+					careerList.get(0).getCareer_jobs());
 		output += String.format("%-10d %-35s %-100s %-20s \n", careerList.get(1).getCareer_id(),
-				careerList.get(1).getCareer_name(), careerList.get(1).getCareer_info(),
-				careerList.get(1).getCareer_jobs());
+					careerList.get(1).getCareer_name(), careerList.get(1).getCareer_info(),
+					careerList.get(1).getCareer_jobs());
+
 
 		assertEquals("test that the careerList are printed correctly with the added recoreds", output, showCareerList);
 

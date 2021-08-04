@@ -31,7 +31,7 @@ public class CPA_Main {
 		ArrayList<career> careerList = new ArrayList<career>();
 		careerList.add(career1);
 		careerList.add(career2);
-		
+
 		ArrayList<prerequisites> prerequisitesList = new ArrayList<prerequisites>();
 
 		while (userOption != 0) { // user did not chose exit
@@ -156,47 +156,47 @@ public class CPA_Main {
 				case 4:
 					break;
 				}
-			} 
+			}
 
 			else if (userOption == 4) { // add new prerequisites
 				prerequisitemenu();
 				int prechoice = Helper.readInt("Enter your option: ");
-				
-				switch(prechoice) {
-				case 1: 
-						String output = viewPrerequisites(prerequisitesList);
-						System.out.println(output);
-						
-						break;
-					
-				case 2: 
-							
-						int prereqID = Helper.readInt("Enter prerequisite id: ");
-						int subjectID = Helper.readInt("Enter subject id: ");
-						String relationship = Helper.readString("Enter relationship(s): ");
-						String criteria = Helper.readString("Enter criteria: ");
-						String description = Helper.readString("Enter description: ");
 
-						prerequisites prereqnew = new prerequisites(prereqID, subjectID, relationship, criteria, description);
+				switch (prechoice) {
+				case 1:
+					String output = viewPrerequisites(prerequisitesList);
+					System.out.println(output);
 
-						addPrerequisites(prerequisitesList, prereqnew);
-						
-						break;
-						
+					break;
+
+				case 2:
+
+					int prereqID = Helper.readInt("Enter prerequisite id: ");
+					int subjectID = Helper.readInt("Enter subject id: ");
+					String relationship = Helper.readString("Enter relationship(s): ");
+					String criteria = Helper.readString("Enter criteria: ");
+					String description = Helper.readString("Enter description: ");
+
+					prerequisites prereqnew = new prerequisites(prereqID, subjectID, relationship, criteria,
+							description);
+
+					addPrerequisites(prerequisitesList, prereqnew);
+
+					break;
+
 				case 3:
-						viewPrerequisites(prerequisitesList);
-						int prerequisiteID = Helper.readInt("Enter ID of prerequisite you want to delete: ");
-						
-						String message = deletePrerequisite(prerequisitesList, prerequisiteID);
-						System.out.println(message);
-						
-						break;
-				case 4: 
-						break;
-					
-						
+					viewPrerequisites(prerequisitesList);
+					int prerequisiteID = Helper.readInt("Enter ID of prerequisite you want to delete: ");
+
+					String message = deletePrerequisite(prerequisitesList, prerequisiteID);
+					System.out.println(message);
+
+					break;
+				case 4:
+					break;
+
 				}
-				
+
 			}
 
 			else if (userOption == 0) {
@@ -329,7 +329,8 @@ public class CPA_Main {
 		String output = "";
 
 		if (careerList.size() != 0) {
-			output += String.format("%-10s %-35s %-100s %-20s \n", "ID", "NAME", "INFORAMTION", "RELAVENT JOB");
+			output += String.format("%-10s %-35s %-100s %-20s \n", "ID", "CAREER GROUP", "GROUP DESCRIPTION",
+					"RELAVENT JOB");
 
 			output += retrieveAllCareer(careerList);
 		} else {
@@ -339,39 +340,38 @@ public class CPA_Main {
 	}
 
 	public static void addCareer(ArrayList<career> careerList, career newCareer) {
+		
+		boolean isDuplicate = false; 
+		boolean isEmpty = false; 
+		boolean isTooLong = false;
 
-		if (careerList.size() != 0) { // if not empty
+		
+		if (careerList.size() != 0) {
 			for (int i = 0; i < careerList.size(); i++) {
-				if (careerList.get(i).getCareer_id() == newCareer.getCareer_id()
-						|| careerList.get(i).getCareer_name().equalsIgnoreCase(newCareer.getCareer_name())) { // duplicate
-																												// of id
-																												// or
-																												// name
-					System.out.println("Failed! ID or career name exists");
-					break;
-				} else {
-					// no duplicate but got empty field
-					if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().isEmpty()
-							|| newCareer.getCareer_info().isEmpty() || newCareer.getCareer_jobs().isEmpty()) {
-						System.out.println("Failed! All fields needed to be filled in.");
-						break;
-					} else { // no duplicate and empty field
-						if (newCareer.getCareer_info().length() > 100) { // info too long
-							System.out.println("Too much information entered");
-							break;
-						} else {
-							careerList.add(newCareer);
-							System.out.println("New career has been added successfully");
-							break;
-						}
-					}
+				if (careerList.get(i).getCareer_id() == newCareer.getCareer_id() || careerList.get(i).getCareer_name().equalsIgnoreCase(newCareer.getCareer_name())) {
+					isDuplicate = true;
 				}
 			}
-		} else {
+			if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().isEmpty()
+					|| newCareer.getCareer_info().isEmpty() || newCareer.getCareer_jobs().isEmpty()) {
+				isEmpty = true;
+			}
+			if (newCareer.getCareer_info().length() > 100) {
+				isTooLong = true;
+			}
+		} 
+		
+		
+		if (isDuplicate == false && isEmpty == false && isTooLong == false) {
 			careerList.add(newCareer);
 			System.out.println("New career has been added successfully");
+		} else if (isDuplicate == true) {
+			System.out.println("Failed! ID or career name exists");
+		} else if (isEmpty == true) {
+			System.out.println("Failed! All fields needed to be filled in.");
+		} else if (isTooLong == true) {
+			System.out.println("Failed! Too much information entered");
 		}
-
 	}
 
 	public static void deleteCareer(ArrayList<career> careerList, int careerId) {
@@ -460,10 +460,9 @@ public class CPA_Main {
 		System.out.println("4. Return to main menu");
 		Helper.line(30, "-");
 	}
-	
+
 	public static String viewPrerequisites(ArrayList<prerequisites> prerequisitesList) {
 
-		
 		Helper.line(30, "-");
 		System.out.println("PREREQUISITES LIST");
 		Helper.line(30, "-");
@@ -471,7 +470,8 @@ public class CPA_Main {
 		String output = "";
 
 		if (prerequisitesList.size() != 0) {
-			output += String.format("%-10s %-10s %-20s %-20s %-100s \n", "ID", "SUBJECT ID", "CRITERIA", "RELATIONSHIP", "DESCRIPTION");
+			output += String.format("%-10s %-10s %-20s %-20s %-100s \n", "ID", "SUBJECT ID", "CRITERIA", "RELATIONSHIP",
+					"DESCRIPTION");
 
 			for (int i = 0; i < prerequisitesList.size(); i++) {
 				output += String.format("%-10d %-35s %-100s %-20s \n", prerequisitesList.get(i).getPrerequisitesId(),
@@ -486,12 +486,10 @@ public class CPA_Main {
 
 	public static void addPrerequisites(ArrayList<prerequisites> prerequisitesList, prerequisites newreq) {
 
-
-		
 		prerequisitesList.add(newreq);
 
 	}
-	
+
 	public static String deletePrerequisite(ArrayList<prerequisites> prerequisitesList, int prerequisiteID) {
 		String message = "";
 
