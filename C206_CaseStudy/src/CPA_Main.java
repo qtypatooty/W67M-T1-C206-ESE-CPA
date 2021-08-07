@@ -117,14 +117,10 @@ public class CPA_Main {
 				case 1:
 					int subjectId = Helper.readInt("Enter subject ID > ");
 					String subjectName = Helper.readString("Enter the subject you want to add > ");
-					String compulsory = Helper.readString("Compulsory / Elective");
+					String compulsory = Helper.readString("Compulsory / Elective > ");
 					subject newsubject = new subject(subjectId, subjectName, compulsory);
-					boolean result = CPA_Main.addSubject(subjectlist, newsubject);
-					if (result == true) {
-						System.out.println("Subject added!");
-					} else {
-						System.out.println("Subject not added!");
-					}
+
+					addSubject(subjectlist, newsubject);
 					break;
 				case 2:
 					String allsubjects = CPA_Main.subjectListToString(subjectlist);
@@ -248,15 +244,36 @@ public class CPA_Main {
 
 	}
 
-	public static boolean addSubject(ArrayList<subject> subjectlist, subject subject) {
+	public static void addSubject(ArrayList<subject> subjectlist, subject subject) {
+		boolean repeated = false;
+		boolean empty = false;
 
-		if (subject.getSubjectName() != null) {
-			if (!subject.getSubjectName().isEmpty()) {
-				subjectlist.add(subject);
-				return true;
+		if (subjectlist.size() != 0) {
+			for (int i = 0; i < subjectlist.size(); i++) {
+				if (subjectlist.get(i).getSubjectId() == subject.getSubjectId()
+						|| subjectlist.get(i).getSubjectName().equalsIgnoreCase(subject.getSubjectName())) {
+					repeated = true;
+
+				}
+			}
+
+			if (subject.getSubjectId() == 0 || subject.getSubjectName().isEmpty() || subject.getSubjectName() == null
+					|| subject.getSubjectName().equals("") || subject.getSubjectName().equals(" ")
+					|| subject.getInformation().isEmpty() || subject.getInformation() == null
+					|| subject.getInformation().equals("") || subject.getInformation().equals(" ")) {
+				empty = true;
 			}
 		}
-		return false;
+		if (repeated == false && empty == false) {
+			subjectlist.add(subject);
+			System.out.println("Successfully added!");
+		} else if (repeated == true) {
+			System.out.println("Subject ID / Name can't be added because it has been added before.");
+		} else if (empty == true) {
+			System.out.println("Please fill in all the required fields.");
+		} else if (repeated == true && empty == true) {
+			System.out.println("Subject ID is repeated and please fill in the required fields.");
+		}
 	}
 
 	public static String subjectListToString(ArrayList<subject> subjectlist) {
@@ -340,15 +357,15 @@ public class CPA_Main {
 	}
 
 	public static void addCareer(ArrayList<career> careerList, career newCareer) {
-		
-		boolean isDuplicate = false; 
-		boolean isEmpty = false; 
+
+		boolean isDuplicate = false;
+		boolean isEmpty = false;
 		boolean isTooLong = false;
 
-		
 		if (careerList.size() != 0) {
 			for (int i = 0; i < careerList.size(); i++) {
-				if (careerList.get(i).getCareer_id() == newCareer.getCareer_id() || careerList.get(i).getCareer_name().equalsIgnoreCase(newCareer.getCareer_name())) {
+				if (careerList.get(i).getCareer_id() == newCareer.getCareer_id()
+						|| careerList.get(i).getCareer_name().equalsIgnoreCase(newCareer.getCareer_name())) {
 					isDuplicate = true;
 				}
 			}
@@ -359,9 +376,8 @@ public class CPA_Main {
 			if (newCareer.getCareer_info().length() > 100) {
 				isTooLong = true;
 			}
-		} 
-		
-		
+		}
+
 		if (isDuplicate == false && isEmpty == false && isTooLong == false) {
 			careerList.add(newCareer);
 			System.out.println("New career has been added successfully");
@@ -470,13 +486,14 @@ public class CPA_Main {
 		String output = "";
 
 		if (prerequisitesList.size() != 0) {
-			output += String.format("%-5s %-30s %-30s %-30s %-25s \n", "ID", "PREREQUISITE SUBJECT ID", "PREREQUISITE SUBJECT DESCRIPTION", "PREREQUISITE GRADE",
-					"PREREQUISITE CRITERIA DESCRIPTION");
+			output += String.format("%-5s %-30s %-30s %-30s %-25s \n", "ID", "PREREQUISITE SUBJECT ID",
+					"PREREQUISITE SUBJECT DESCRIPTION", "PREREQUISITE GRADE", "PREREQUISITE CRITERIA DESCRIPTION");
 
 			for (int i = 0; i < prerequisitesList.size(); i++) {
-				output += String.format("%-5s %-30s %-30s %-30s %-25s \n", prerequisitesList.get(i).getPrerequisitesId(),
-						prerequisitesList.get(i).getsubject_id(), prerequisitesList.get(i).getrelationship(), 
-						prerequisitesList.get(i).getcriteria(), prerequisitesList.get(i).getDescription());
+				output += String.format("%-5s %-30s %-30s %-30s %-25s \n",
+						prerequisitesList.get(i).getPrerequisitesId(), prerequisitesList.get(i).getsubject_id(),
+						prerequisitesList.get(i).getrelationship(), prerequisitesList.get(i).getcriteria(),
+						prerequisitesList.get(i).getDescription());
 			}
 		} else {
 			output = "No record found";

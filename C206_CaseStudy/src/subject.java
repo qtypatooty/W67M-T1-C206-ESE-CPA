@@ -16,4 +16,8 @@ public class subject {
 	public String getSubjectName() {
 		return subject_name;
 	}
+
+	public String getInformation() {
+		return information;
+	}
 }
