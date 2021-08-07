@@ -522,7 +522,37 @@ public class CPA_Main {
 
 	public static void addPrerequisites(ArrayList<prerequisites> prerequisitesList, prerequisites newreq) {
 
-		prerequisitesList.add(newreq);
+		String message = "";
+		boolean isDuplicate = false;
+		boolean isEmpty = false;
+
+		if (newreq.getPrerequisitesId() != 0 && newreq.getsubject_id() != 0 && !newreq.getDescription().isEmpty()
+				&& !newreq.getrelationship().isEmpty() && !newreq.getcriteria().isEmpty()) {
+			isEmpty = false;
+			for(int i=0;i<prerequisitesList.size();i++) {
+				if(prerequisitesList.get(i).getPrerequisitesId() != newreq.getPrerequisitesId()) {
+					isDuplicate = false;
+					
+				}else if(prerequisitesList.get(i).getPrerequisitesId() == newreq.getPrerequisitesId()){
+					isDuplicate = true;
+				}
+			}
+
+		} else {
+			isEmpty = true;
+		}
+		
+		if(isDuplicate == false && isEmpty == false) {
+			prerequisitesList.add(newreq);
+			message="Prerequisite Added";
+		}else if(isDuplicate == true && isEmpty == false) {
+			message="Duplicate ID entered";
+			
+		}else {
+			message = "You have entered empty fields, please enter information.";
+		}
+		System.out.println(message);
+		
 
 	}
 
