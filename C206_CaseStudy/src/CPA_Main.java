@@ -260,10 +260,7 @@ public class CPA_Main {
 				}
 			}
 
-			if (subject.getSubjectId() == 0 || subject.getSubjectName().isEmpty() || subject.getSubjectName() == null
-					|| subject.getSubjectName().equals("") || subject.getSubjectName().equals(" ")
-					|| subject.getInformation().isEmpty() || subject.getInformation() == null
-					|| subject.getInformation().equals("") || subject.getInformation().equals(" ")) {
+			if (subject.getSubjectId() == 0 || subject.getSubjectName().trim().isEmpty() || subject.getInformation().trim().isEmpty()) {
 				empty = true;
 			}
 		}
@@ -372,9 +369,7 @@ public class CPA_Main {
 					isDuplicate = true;
 				}
 			}
-			if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().isEmpty() || newCareer.getCareer_name().trim().isEmpty() 
-					|| newCareer.getCareer_info().isEmpty() || newCareer.getCareer_info().trim().isEmpty()
-					|| newCareer.getCareer_jobs().isEmpty() || newCareer.getCareer_jobs().trim().isEmpty()) {
+			if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().trim().isEmpty() || newCareer.getCareer_info().trim().isEmpty() || newCareer.getCareer_jobs().trim().isEmpty()) {
 				isEmpty = true;
 			}
 			if (newCareer.getCareer_info().length() > 100) {
@@ -415,8 +410,8 @@ public class CPA_Main {
 		boolean isDuplicate = false;
 		boolean isEmpty = false;
 
-		if (newUser.getUserid() != 0 && !newUser.getName().isEmpty() && !newUser.getRole().isEmpty()
-				&& !newUser.getemail().isEmpty() && !newUser.getPassword().isEmpty()) {
+		if (newUser.getUserid() != 0 && !newUser.getName().trim().isEmpty() && !newUser.getRole().trim().isEmpty()
+				&& !newUser.getemail().trim().isEmpty() && !newUser.getPassword().trim().isEmpty()) {
 			isEmpty = false;
 			for(int i=0;i<userList.size();i++) {
 				if(userList.get(i).getUserid() != newUser.getUserid()) {
