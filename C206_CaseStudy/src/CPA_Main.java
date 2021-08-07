@@ -372,8 +372,9 @@ public class CPA_Main {
 					isDuplicate = true;
 				}
 			}
-			if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().isEmpty()
-					|| newCareer.getCareer_info().isEmpty() || newCareer.getCareer_jobs().isEmpty()) {
+			if (newCareer.getCareer_id() == 0 || newCareer.getCareer_name().isEmpty() || newCareer.getCareer_name().trim().isEmpty() 
+					|| newCareer.getCareer_info().isEmpty() || newCareer.getCareer_info().trim().isEmpty()
+					|| newCareer.getCareer_jobs().isEmpty() || newCareer.getCareer_jobs().trim().isEmpty()) {
 				isEmpty = true;
 			}
 			if (newCareer.getCareer_info().length() > 100) {
