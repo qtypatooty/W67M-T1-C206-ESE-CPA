@@ -18,8 +18,11 @@ public class CPA_Main {
 		subjectlist.add(subject4);
 		subjectlist.add(subject5);
 		int userOption = -1;
+		
+		user user1=new user(9999,"admin 1","admin","admin@mail.com","adminPassword");
 
 		ArrayList<user> userList = new ArrayList<user>();
+		userList.add(user1);
 
 		// careerList
 		career career1 = new career(1, "Architecture and engineering",
@@ -316,7 +319,7 @@ public class CPA_Main {
 		return output;
 	}
 
-	private static void careerMenu() {
+	public static void careerMenu() {
 
 		System.out.println("1. View all career");
 		System.out.println("2. Add new career");
@@ -408,16 +411,36 @@ public class CPA_Main {
 
 	public static void addAccount(ArrayList<user> userList, user newUser) {
 		String message = "";
+		boolean isDuplicate = false;
+		boolean isEmpty = false;
 
 		if (newUser.getUserid() != 0 && !newUser.getName().isEmpty() && !newUser.getRole().isEmpty()
 				&& !newUser.getemail().isEmpty() && !newUser.getPassword().isEmpty()) {
-			userList.add(newUser);
-			message = "Account has been created";
+			isEmpty = false;
+			for(int i=0;i<userList.size();i++) {
+				if(userList.get(i).getUserid() != newUser.getUserid()) {
+					isDuplicate = false;
+					
+				}else if(userList.get(i).getUserid() == newUser.getUserid()){
+					isDuplicate = true;
+				}
+			}
 
 		} else {
-			message = "You did not fill up all required field, add acount failed.";
+			isEmpty = true;
+		}
+		
+		if(isDuplicate == false && isEmpty == false) {
+			userList.add(newUser);
+			message="Account has been created";
+		}else if(isDuplicate == true && isEmpty == false) {
+			message="Duplicate ID entered, registration failed!";
+			
+		}else {
+			message = "You did not fill up all required field, registration failed.";
 		}
 		System.out.println(message);
+
 
 	}
 
