@@ -526,8 +526,8 @@ public class CPA_Main {
 		boolean isDuplicate = false;
 		boolean isEmpty = false;
 
-		if (newreq.getPrerequisitesId() != 0 && newreq.getsubject_id() != 0 && !newreq.getDescription().isEmpty()
-				&& !newreq.getrelationship().isEmpty() && !newreq.getcriteria().isEmpty()) {
+		if (newreq.getPrerequisitesId() != 0 && newreq.getsubject_id() != 0 && !newreq.getDescription().trim().isEmpty()
+				&& !newreq.getrelationship().trim().isEmpty() && !newreq.getcriteria().trim().isEmpty()) {
 			isEmpty = false;
 			for(int i=0;i<prerequisitesList.size();i++) {
 				if(prerequisitesList.get(i).getPrerequisitesId() != newreq.getPrerequisitesId()) {
